@@ -1,5 +1,5 @@
 <?php
-/* Reset a password through an email 
+/* Resets a password through an email 
         Required fields
             Send email:
                 $_POST['email']
