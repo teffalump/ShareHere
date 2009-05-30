@@ -1,5 +1,5 @@
 <?php
-/* Store a new user's details, sends an email, and confirms the link in the email.
+/* Stores a new user's details, sends an email, and confirms the link in the email.
         Required fields:
             Register:
                 $_POST['password']
