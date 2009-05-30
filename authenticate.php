@@ -1,5 +1,5 @@
 <?php
-/* Authenticate a user
+/* Authenticates a user
     Required fields
         $_POST['password']
         $_POST['email']
