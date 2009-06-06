@@ -4,7 +4,7 @@ $(function () {
     //Get data from area hovered and display it, and then remove it
     $(".network").hover(
         function {
-            var datastring="network="+this.id //some sort of identifier for the area
+            var dataString="network="+this.id //some sort of identifier for the area
             $.ajax({
                 type: "POST",
                 url: "info.php", //or whatever the script is
