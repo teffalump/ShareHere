@@ -4,13 +4,14 @@ $(function () {
     //Get data from area hovered and display it, and then remove it
     $(".network").hover(
         function {
-            var dataString="network="+this.id //some sort of identifier for the area
+            var dataString="network_id="+this.id //some sort of identifier for the area
             $.ajax({
                 type: "POST",
-                url: "info.php", //or whatever the script is
+                url: "users.php", //or whatever the script is
                 data: dataString,
                 success: function(info) {
-                    for (person in info)
+                    var users=info.split(":"); //I hope this stuff is fast...
+                    for (person in users)
                     {
                         //then make the popups
                     }
