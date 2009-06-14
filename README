@@ -1,4 +1,4 @@
 Drewid, yeah!! (He is changing shape, help us all)
 Are you here?? =-)
 #Thoughts:
-I am a little confused about what is the best way to retrieve the information from the mysql database and give it to the jquery/javascript front. Should I pass the information as strings or simply modify the page in the php? Or something else, I don't know? I've opted for former, that is retrieve the information with the php and try, with the least amount of processing, to pass it to the javascript to play with. Still need to think about this.
+I am a little confused about what is the best way to retrieve the information from the mysql database and give it to the jquery/javascript front. Should I pass the information as strings or simply modify the page in the php? Or something else, I don't know? I've opted for former, that is retrieve the information with the php and try, with the least amount of processing, to pass it to the javascript to play with. Still need to think about this. It wouldn't be too hard to change it to do the html stuff in the php. So, we can talk about it, I guess.
