@@ -18,7 +18,7 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
     $result=mysql_query($query);
     //Check for invalid or unsuccessful query
     if (mysql_num_rows($result) == 0) {
-        return 2;
+        echo 2;
         exit;
     }
     //Free result, hash new password with same salt and check equality
@@ -26,15 +26,15 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
     mysql_free_result($result);
     $password_hash = generateHash($_POST['password'], $row["password"]);
     if ($password_hash == $row["password"]) {
-        return 0;
+        echo 0;
         exit;
     }
     else {
-        return 1;
+        echo 1;
         exit;
     }
 } else { 
-    return 3;
+    echo 3;
     exit;
 }
 ?>
