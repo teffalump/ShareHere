@@ -5,7 +5,7 @@
         Returns:
             1 - required field unset
             join(":",$users) - list of users (colon-seperated) */
-if (isset($_POST['network_id']) //network_id or w/e identifying mark
+if (isset($_POST['network_id'])) //network_id or w/e identifying mark
 {
     require_once "general.php";
     $network_id=$_POST['network_id'];
