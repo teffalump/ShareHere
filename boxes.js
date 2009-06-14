@@ -19,6 +19,6 @@ $(function () {
             });
         }, 
         function {
-            $(this).find().remove() //fill in with however one removes the boxes
+            $(this).find().remove(); //fill in with however one removes the boxes
         });
 });
