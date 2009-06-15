@@ -17,9 +17,11 @@ if (isset($_POST['network_id'])) //network_id or w/e identifying mark
     }
     echo join(":",$users);
     mysql_free_result($result);
+    exit;
 } 
 else 
 {
     echo 1;
+    exit;
 }    
 ?>
