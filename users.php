@@ -9,7 +9,7 @@ if (isset($_POST['network_id'])) //network_id or w/e identifying mark
 {
     require_once "general.php";
     $network_id=$_POST['network_id'];
-    $query=sprintf("SELECT name FROM users WHERE network_id='%s'", msyql_real_escape_string($network_id)); //add more fields if one wants
+    $query=sprintf("SELECT name FROM users WHERE network_id='%s'", msyql_real_escape_string($network_id)); //add more fields if one wants and also modify to include child networks, but we need to decide what schema to use
     $result=mysql_query($query);
     while( $row = mysql_fetch_array($result) )
     {
