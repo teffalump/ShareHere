@@ -1,7 +1,4 @@
 <?php
-$con = mysql_connect(SERVER, S_USERNAME, S_PASSWORD) or die('Could not connect: ' . mysql_error());
-mysql_select_db(DATABASE, $con);
-
 function generateHash($plainText, $salt = null, $salt_length=10)
 {
     if ($salt === null)
@@ -15,4 +12,3 @@ function generateHash($plainText, $salt = null, $salt_length=10)
     return $salt . hash("sha512", $salt . $plainText);
 }
 ?>
-
