@@ -30,7 +30,6 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
         //Check for invalid or unsuccessful query
         if (mysqli_stmt_num_rows($stmt)== 0) {
             echo 2;
-            exit;
         }
         /* bind result variables */
         mysqli_stmt_bind_result($password);
@@ -41,11 +40,9 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
         $password_hash = generateHash($_POST['password'], $password);
         if ($password_hash == $password) {
             echo 0;
-            exit;
         }
         else {
             echo 1;
-            exit;
         }
 
         //Free result
