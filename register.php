@@ -28,7 +28,7 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
             $to=$email;
             $subject="Email confirmation for Sharehere.net";
             $email_link_hash=substr(generateHash($email, EMAIL_SALT, 125), 125);
-            $url=vsprintf("http://localhost/register.php?email=%s&cc=%s", array($email, $email_link_hash));
+            $url=vsprintf(REGISTER_LINK . "?email=%s&cc=%s", array($email, $email_link_hash));
             $message = vsprintf("Dear %s,\n\nPlease confirm with this link...\n%s\n\nAll the best,\n\nSharehere.net", array($username, $url));
             $headers = 'From: share@sharehere.net'."\r\n"
                     .'Content-type: text/plain; charset=utf-8' . "\r\n";
