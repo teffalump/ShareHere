@@ -63,7 +63,7 @@ if (isset($_POST['email'])) {
         mysqli_stmt_close($stmt);
         if ( $hash == $email_link_hash ) {
             //Submit query
-            $stmt=mysqi_stmt_init($link);
+            $stmt=mysqli_stmt_init($link);
             if (mysqli_stmt_prepare($stmt, "UPDATE users SET password=? WHERE email=?")) {
                 mysqli_stmt_bind_param($stmt, "ss", $new_password_hash, $email)
                 
