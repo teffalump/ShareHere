@@ -35,7 +35,7 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
         mysqli_stmt_bind_result($password);
 
         /* fetch value */
-        mysqi_stmt_fetch($stmt);
+        mysqli_stmt_fetch($stmt);
         //Check password against db password hash
         $password_hash = generateHash($_POST['password'], $password);
         if ($password_hash == $password) {
