@@ -11,28 +11,49 @@
 */
 if (isset($_POST['password']) && isset($_POST['email'])) {
     require_once "general.php";
-    //Set variable
-    $email=$_POST['email'];
-    //Get password hash
-    $query=sprintf("SELECT password FROM users WHERE email='%s'", mysql_real_escape_string($email));
-    $result=mysql_query($query);
-    //Check for invalid or unsuccessful query
-    if (mysql_num_rows($result) == 0) {
-        echo 2;
-        exit;
-    }
-    //Free result, hash new password with same salt and check equality
-    $row=mysql_fetch_assoc($result);
-    mysql_free_result($result);
-    $password_hash = generateHash($_POST['password'], $row["password"]);
-    if ($password_hash == $row["password"]) {
-        echo 0;
-        exit;
-    }
-    else {
-        echo 1;
-        exit;
-    }
+    require_once "connection.php";
+    $stmt = $mysqli_stmt_init($link)
+    if (mysqi_stmt_prepare($stmt, "SELECT password FROM users WHERE email=?")) {
+
+        /* bind parameters for markers */
+        mysqli_stmt_bind_param($stmt,"s", $email);
+         
+        //Set email to one passed to script 
+        $email=$_POST['email'];
+        
+        /* execute query */
+        mysqli_stmt_execute($stmt);
+ 
+        //Store result
+        mysqli_stmt_store_result($stmt);
+        
+        //Check for invalid or unsuccessful query
+        if (mysqli_stmt_num_rows($stmt)== 0) {
+            echo 2;
+            exit;
+        }
+        /* bind result variables */
+        mysqli_stmt_bind_result($password);
+
+        /* fetch value */
+        mysqi_stmt_fetch($stmt);
+        //Check password against db password hash
+        $password_hash = generateHash($_POST['password'], $password);
+        if ($password_hash == $password) {
+            echo 0;
+            exit;
+        }
+        else {
+            echo 1;
+            exit;
+        }
+
+        //Free result
+        mysqli_stmt_free_result($stmt);
+
+        /* close statement */
+        mysqli_stmt_close($stmt);
+    } 
 } else { 
     echo 3;
     exit;
