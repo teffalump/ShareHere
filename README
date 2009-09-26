@@ -1,7 +1,1 @@
-Drewid, yeah!! (He is changing shape, help us all)
-Are you here?? =-)
-#Thoughts:
-I am a little confused about what is the best way to retrieve the information from the mysql database and give it to the jquery/javascript front. Should I pass the information as strings or simply modify the page in the php? Or something else, I don't know? I've opted for former, that is retrieve the information with the php and try, with the least amount of processing, to pass it to the javascript to play with. Still need to think about this. It wouldn't be too hard to change it to do the html stuff in the php. So, we can talk about it, I guess.
-#Some ideas for the boxes:
--It would be cool if the popup were one large box, dynamic and intelligent about when they showed individual users or networks. That is, if they were over 10 users, for example, it would break the users into respective child networks then one could click on the network for greater breakdown, then another network, etc. Also, the box could have a back button, and a search item field.
--So we have a large network someone hovers over, we then popup a box with its immediate child networks, then the user can click on one which updates the box with its child networks and so on. However, if one gets to a primite network (that is one with no children) we display the users. Also, the box will have an item search at, say, the top or something similar. And it will have a 'back' button to go up one level. Doesn't seem too hard.
+Hmm...
