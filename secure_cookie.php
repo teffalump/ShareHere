@@ -6,8 +6,8 @@ function secureCookie($username, $session_key, $data='')
     //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
     //k=HMAC(username|expiration time, sk)
     //sk = server key
-    require_once "general.php"; //Needs SERVER_KEY and FIELD_SEP defined
-    $expiration=time() + (3 * 60 * 60) //Change to whatever you want the expiration time to be
+    require_once "general.php"; //Needs SERVER_KEY and FIELD_SEP and EXPIR defined
+    $expiration=time() + EXPIR; //Change to whatever you want the expiration time to be
  
     $k=hash_hmac("sha512", $username.FIELD_SEP.$expiration, SERVER_KEY);
     $end=hash_hmac("sha512", $username.FIELD_SEP.$expiration.FIELD_SEP.$data.FIELD_SEP.$session_key, $k);
@@ -23,10 +23,10 @@ function validCookie($cookie, $session_key)
     //sk = server key
     require_once "general.php"; //Requires SERVER_KEY and FIELD_SEP defined
     $fields = explode(FIELD_SEP, $cookie);
-
+    
     //Two checks to confirm validity 
     //First: expiration and current time
-    if ( $fields[1] >= time() ) 
+    if ( $fields[1] >= time() + EXPIR) //Change expiration time when needed 
     {
          return False;
     }
