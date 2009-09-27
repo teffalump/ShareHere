@@ -21,12 +21,12 @@ function validCookie($cookie, $session_key)
     //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
     //k=HMAC(username|expiration time, sk)
     //sk = server key
-    require_once "general.php"; //Requires SERVER_KEY and FIELD_SEP and EXPIR to be defined
+    require_once "general.php"; //Requires SERVER_KEY and FIELD_SEP to be defined
     $fields = explode(FIELD_SEP, $cookie);
     
     //Two checks to confirm validity 
     //First: expiration and current time
-    if ( $fields[1] >= time() + EXPIR)
+    if (time() >= $fields[1] )
     {
          return False;
     }
