@@ -1,5 +1,5 @@
 <?php
-function secureCookie($username, $session_key $data='')
+function secureCookie($username, $session_key, $data='')
 {
     //Returns a secure cookie -- scheme follows. $session_key needs to be SSL session key or something similar
     
