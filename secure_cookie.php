@@ -10,7 +10,7 @@ function secureCookie($username, $session_key, $data='')
     $expiration=time() + (3 * 60 * 60) //Change to whatever you want the expiration time to be
  
     $k=hash_hmac("sha512", $username.FIELD_SEP.$expiration, SERVER_KEY);
-    $end=hash_hmac("sha512", $username.FIELD_SEP.$expiration.FIELD_SEP.$data.FIELD_SEP.$session_key $k);
+    $end=hash_hmac("sha512", $username.FIELD_SEP.$expiration.FIELD_SEP.$data.FIELD_SEP.$session_key, $k);
     $beg=$username.FIELD_SEP.$expiration.FIELD_SEP.$data;
     return $beg.FIELD_SEP.$end;
 }
@@ -31,8 +31,8 @@ function validCookie($cookie, $session_key)
          return False;
     }
     //Second: compute our own HMAC(...) and compare with cookie's HMAC(...)
-    $k = hmac_hash("sha512", $fields[0].FIELD_SEP.$fields[1], SERVER_KEY);
-    $test=hmac_hash("sha512", implode(FIELD_SEP, array_slice($fields, 0,3)).FIELD_SEP.$session_key, $k);
+    $k = hash_hmac("sha512", $fields[0].FIELD_SEP.$fields[1], SERVER_KEY);
+    $test=hash_hmac("sha512", implode(FIELD_SEP, array_slice($fields, 0,3)).FIELD_SEP.$session_key, $k);
     if ( $test != $fields[3] )
     {
         return False;
