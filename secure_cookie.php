@@ -1,7 +1,7 @@
 <?php
 function secureCookie($username, $session_key $data='')
 {
-    //Returns a secure cookie -- scheme follows. $unique_info needs to be SSL session key or something similar
+    //Returns a secure cookie -- scheme follows. $session_key needs to be SSL session key or something similar
     
     //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
     //k=HMAC(username|expiration time, sk)
@@ -16,7 +16,7 @@ function secureCookie($username, $session_key $data='')
 }
 function validCookie($cookie, $session_key)
 {
-    //Checks the validity of a cookie. True if valid. False if not. $unique_info needs to be SSL session key or something similar
+    //Checks the validity of a cookie. True if valid. False if not. $session_key needs to be SSL session key or something similar
     
     //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
     //k=HMAC(username|expiration time, sk)
