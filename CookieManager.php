@@ -1,9 +1,9 @@
 <?php
 class CookieManager
-    /* This class implements a limited but effective and secure cookie manager.
+    /* This class implements a limited but effective secure cookie manager.
        
        I mostly took the code from BigOrNot_CookieManager written by Matthieu Huguet.
-       If there are some problems with the similar code, talk to me.
+       If there are any problems with the similar code, talk to me.
     */
 {
     //Server key
@@ -37,9 +37,9 @@ class CookieManager
         $secureCookieValue = $this->_secureCookieValue($username, $expiration, $data);
         setcookie($cookiename, $secureCookieValue, $expiration, $path, $domain, $secure, $httponly);
     }
-    public function         deleteCookie($cookiename)
+    public function         deleteCookie($cookiename, $path='/', $domain='', $secure = True, $httponly = True)
     {
-        setcookie($name=$cookiename, $expire=12345);
+        setcookie($cookiename, '', $expire=1234567, $path, $secure, $httponly);
     }
     public function         cookieExists($cookiename)
     {
