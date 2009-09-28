@@ -39,7 +39,7 @@ class CookieManager
     }
     public function         deleteCookie($cookiename, $path='/', $domain='', $secure = True, $httponly = True)
     {
-        setcookie($cookiename, '', $expire=1234567, $path, $secure, $httponly);
+        setcookie($cookiename, '', $expire=1234567, $path, $domain, $secure, $httponly);
     }
     public function         cookieExists($cookiename)
     {
