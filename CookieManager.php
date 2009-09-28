@@ -32,12 +32,12 @@ class CookieManager
         $this->$_ssl = $status;
         return ($this->_ssl);
     }
-    public function         setCookie($cookiename, $data, $expiration = 0, $path = '', $domain = '', $secure = True, $httponly = True)
+    public function         setCookie($cookiename, $data, $expiration = 0, $path = '', $domain = '', $secure = True, $httponly = null)
     {
         $secureCookieValue = $this->_secureCookieValue($username, $expiration, $data);
         setcookie($cookiename, $secureCookieValue, $expiration, $path, $domain, $secure, $httponly);
     }
-    public function         deleteCookie($cookiename, $path='/', $domain='', $secure = True, $httponly = True)
+    public function         deleteCookie($cookiename, $path='/', $domain='', $secure = True, $httponly = null)
     {
         setcookie($cookiename, '', $expire=1234567, $path, $domain, $secure, $httponly);
     }
