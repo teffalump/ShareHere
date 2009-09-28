@@ -72,8 +72,8 @@ class CookieManager
              return False;
         }
         //Third: compute our own HMAC(...) and compare with cookie's HMAC(...)
-        $test=$this->_secureCookieValue($cookieFields[0], $cookieFields[1], $cookieFields[2]);
-        if ( $test[3] != $cookieFields[3] )
+        $test=array_slice(explode(':::', $this->_secureCookieValue($cookieFields[0], $cookieFields[1], $cookieFields[2])), -1);
+        if ( $test != $cookieFields[3] )
         {
             return False;
         }
