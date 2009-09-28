@@ -1,8 +1,4 @@
 <?php
-define("SERVER_KEY", 'testtesttest'); //Our key for secure cookie scheme
-define("FIELD_SEP",":::");  //Cookie field separator
-define("EMAIL_SALT",'testtesttesttest'); //email key
-define("EXPIR", (3*60*60)); //Expiration time for cookie
 function generateHash($plainText, $salt = null, $salt_length=10)
 {
     if ($salt === null)
