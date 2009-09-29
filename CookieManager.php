@@ -71,7 +71,7 @@ class CookieManager
         {
              return False;
         }
-        //Third: compute our own HMAC(...) and compare with cookie's HMAC(...)
+        //Third: our computed HMAC(...) matches cookie's HMAC(...)
         $test=array_slice(explode(':::', $this->_secureCookieValue($cookieFields[0], $cookieFields[1], $cookieFields[2])), -1);
         if ( $test != $cookieFields[3] )
         {
@@ -86,14 +86,15 @@ class CookieManager
         //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
         //k=HMAC(username|expiration time, sk)
         //sk = server key
+        //If SSL isn't enabled, then bind the cookie to their IP address - a reasonable substitute, I think.
         $key=hash_hmac("sha512", $username.$expiration, $this->_secret);
         
         if ($this->_ssl && isset($_SERVER['SSL_SESSION_ID']))
         {
-            $digest=hash_hmac("sha512", $username . $expiration . $data . $_SERVER['SSL_SESSION_ID'], $key);
+            $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['SSL_SESSION_ID'], $key);
         }
         else
-            $digest = hash_hmac("sha512", $username . $expiration . $data, $key);
+            $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['REMOTE_ADDR'], $key);
         
         $fields = array($username, $expiration, $data, $digest);
         return (implode(':::', $fields));
