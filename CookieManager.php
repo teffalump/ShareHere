@@ -87,6 +87,7 @@ class CookieManager
         //k=HMAC(username|expiration time, sk)
         //sk = server key
         //If SSL isn't enabled, then bind the cookie to their IP address - a reasonable substitute, I think.
+        //Binding to IP address doesn't have the security the SSL certificate does, but oh well.
         $key=hash_hmac("sha512", $username.$expiration, $this->_secret);
         
         if ($this->_ssl && isset($_SERVER['SSL_SESSION_ID']))
