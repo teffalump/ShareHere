@@ -4,7 +4,7 @@ class FileUploader
 {
     protected $_max_file_size = 524288; //Filesize in bytes
     protected $_upload_path = "/uploads/"; //Directory to store files
-    protected $_allowed_mimes = array("image/jpeg", "image/bmp", "image/gif", "image/png"); //Change this, if we want
+    protected $_allowed_mimes = array("image/jpeg", "image/bmp", "image/gif", "image/png", "image/svg+xml"); //Change this, if we want
     
     public function __construct         ($max_file_size=NULL, $upload_path=NULL, $allowed_mimes=NULL)
     {
@@ -24,6 +24,10 @@ class FileUploader
 
     public function fits                ($file)
     {
+        /* Whether file is smaller than max allowed size
+                Returns boolean
+        */
+
         if (filesize($_FILES[$file]['tmp_name']) <= $this->_max_file_size)
         {
                 return True;
@@ -35,6 +39,10 @@ class FileUploader
     }
     public function set_UploadPath      ($path)
     {
+        /* Set upload path
+                Returns new upload path or False if there was an error
+        */
+
         if (!is_writable($path))
         {
             throw new Exception("Can't write to that directory");
@@ -47,11 +55,22 @@ class FileUploader
     }
     public function set_MaxFileSize     ($size)
     {
+        /* Set max file size */
+
         $this->_max_file_size = $size;
         return ($this->_max_file_size);
     }
     public function uploadFile          ($file)
     {
+        /* Probably going to be most used function - saves file on server
+           Checks if file fits, uploaded ok, and is an allowable file format.
+                Returns:
+                  array(
+                    path -      absolute path to file
+                    mime -      mime of file
+                    )
+        */
+
         $hash=hash_file("sha256", $_FILES[$file]['tmp_name']);
         $mime = this->_mime($file);
         if ($this->fits($file) && $this->upload_Ok($file) && in_array($mime, $this->_allowed_mimes))
@@ -70,6 +89,8 @@ class FileUploader
     }
     public function upload_Ok           ($file)
     {
+        /* If file uploaded with no errors */
+
         if ($_FILES[$file]['error'] === ERR_UPLOAD_OK)
         {
             return True;
@@ -81,7 +102,10 @@ class FileUploader
     }
     protected function _mime            ($file)
     {
-        // This function requires either the finfo extension or a *nix machine
+        /* Retrieves file format of uploaded file.
+           This function requires either the finfo extension or a *nix machine.
+           Returns mime of file
+        */
 
         if ($finfo = finfo_open(FILEINFO_MIME))
         {
