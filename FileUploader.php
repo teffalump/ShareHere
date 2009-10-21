@@ -103,8 +103,8 @@ class FileUploader
     protected function _mime            ($file)
     {
         /* Retrieves file format of uploaded file.
-           This function requires either the finfo extension or a *nix machine.
-           Returns mime of file
+           This function requires either the finfo extension or, in a really bad case, a *nix machine.
+           Returns mime of file or false if failed
         */
 
         if ($finfo = finfo_open(FILEINFO_MIME))
@@ -112,11 +112,22 @@ class FileUploader
             $mime = finfo_file($finfo, $_FILES[$file]['tmp_name']);
         }
         else 
-        {
-            //I don't like executing commands like this, but it should work
+        /*
+            //I've read that forking is shitty and I don't like executing commands like this, but it should work
 
             $path = escapeshellarg( $_FILES[$file]['tmp_name'] );
             $mime = system("file -bi " . $path);
+        */
+        {
+            //Without using the finfo extension...we assume it is an image
+            if ($info = getimagesize($_FILES[$file]['tmp_name']))
+            {
+                $mime=$info['mime'];
+            }
+            else
+            {
+                return False;
+            }
         }
         return ($mime);            
     }
