@@ -70,10 +70,9 @@ class FileUploader
                     mime -      mime of file
                     )
         */
-
-        $hash=hash_file("sha256", $_FILES[$file]['tmp_name']);
         if ($this->fits($file) && $this->upload_Ok($file) && in_array($this->_mime($file), $this->_allowed_mimes))
         {
+            $hash=hash_file("sha256", $_FILES[$file]['tmp_name']);
             if (move_uploaded_file($_FILES[$file]['tmp_name'], $this->_upload_path . $hash))
             {
                 return array('path' => $this->_upload_path . $hash, 'mime' => $mime);
