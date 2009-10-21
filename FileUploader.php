@@ -106,6 +106,7 @@ class FileUploader
         if ($finfo = finfo_open(FILEINFO_MIME))
         {
             $mime = finfo_file($finfo, $_FILES[$file]['tmp_name']);
+            finfo_close($finfo);
         }
         else 
         /*
