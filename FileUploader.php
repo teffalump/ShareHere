@@ -79,7 +79,7 @@ class FileUploader
             }
             
         }
-        unlink($_FILES[$file]['tmp_name'];
+        unlink($_FILES[$file]['tmp_name']);
         return False;
     }
     public function upload_Ok           ($file)
