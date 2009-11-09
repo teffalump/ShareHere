@@ -38,7 +38,8 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
         else {
             echo 1;
         }
-    mysqli_stmt_close($close);
+    }
+    mysqli_stmt_close($stmt);
     exit;
 } elseif (isset($_GET['email']) && isset($_GET['cc'])) {
     require_once "general.php";
@@ -59,6 +60,7 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
         else {
             echo 1;
             }
+    }
     mysqli_stmt_close($stmt);
     exit;
 } else {
