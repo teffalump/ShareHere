@@ -43,7 +43,7 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
 } elseif (isset($_GET['email']) && isset($_GET['cc'])) {
     require_once "general.php";
     require_once "connection.php";
-    $stmt=mysqli_stmt_init($link)
+    $stmt=mysqli_stmt_init($link);
     if (mysqli_stmt_prepare($stmt, "UPDATE users SET authenticated=0 WHERE email=?")) {
         mysqli_stmt_bind_param($stmt, "s", $email);
         //Set variables
