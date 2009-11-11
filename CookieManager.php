@@ -32,14 +32,15 @@ class CookieManager
         $this->$_ssl = $status;
         return ($this->_ssl);
     }
-    public function         setCookie($cookiename, $data, $expiration = 0, $path = '', $domain = '', $secure = True, $httponly = null)
+    public function         setCookie($cookiename, $username, $data, $expiration = 0, $path = '/', $domain = '', $secure = False, $httponly = null)
     {
         $secureCookieValue = $this->_secureCookieValue($username, $expiration, $data);
         setcookie($cookiename, $secureCookieValue, $expiration, $path, $domain, $secure, $httponly);
     }
-    public function         deleteCookie($cookiename, $path='/', $domain='', $secure = True, $httponly = null)
+    public function         deleteCookie($cookiename, $path='/', $domain='', $secure = False, $httponly = null)
     {
         setcookie($cookiename, '', $expire=1234567, $path, $domain, $secure, $httponly);
+        unset($_COOKIE[$cookiename]);
     }
     public function         cookieExists($cookiename)
     {
@@ -49,7 +50,7 @@ class CookieManager
     {
         if ($this->validCookie($cookiename))
         {
-            $cookieFields = explode(':::', $_COOKIE[$cookiename]);
+            $cookieFields = explode('|', base64_decode($_COOKIE[$cookiename]));
             return ($cookieFields[2]);
         }
         else
@@ -58,22 +59,22 @@ class CookieManager
     public function          validCookie($cookiename)
     {
         //Checks the validity of a cookie. True if valid. False if not. 
-        
-        $cookieFields = explode(':::', $_COOKIE[$cookiename]);
+       
+        $cookieFields = explode('|', base64_decode($_COOKIE[$cookiename]));
         //Three checks to confirm validity
         //First: correct number of fields
-        if (count($cookieFields) != 4)
-        {
+        if (count($cookieFields) !== 4)
+        {   
             return False;
         }
         //Second: expires after current time
-        if (time() >= $cookieFields[1] )
+        if (time() >= $cookieFields[1] && !($cookieFields[1]==0))
         {
-             return False;
+            return False;
         }
         //Third: our computed HMAC(...) matches cookie's HMAC(...)
-        $test=array_slice(explode(':::', $this->_secureCookieValue($cookieFields[0], $cookieFields[1], $cookieFields[2])), -1);
-        if ( $test != $cookieFields[3] )
+        $test=explode('|', base64_decode($this->_secureCookieValue($cookieFields[0], $cookieFields[1], $cookieFields[2])));
+        if ( $test[3] != $cookieFields[3] )
         {
             return False;
         }
@@ -82,7 +83,7 @@ class CookieManager
     }
     protected function         _secureCookieValue($username, $expiration = 0, $data='')
     {
-        //Returns a secure cookie value
+        //Returns a secure cookie value - base64
         //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
         //k=HMAC(username|expiration time, sk)
         //sk = server key
@@ -98,7 +99,7 @@ class CookieManager
             $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['REMOTE_ADDR'], $key);
         
         $fields = array($username, $expiration, $data, $digest);
-        return (implode(':::', $fields));
+        return (base64_encode(implode('|', $fields)));
     }
 }
-?> 
+?>

@@ -16,15 +16,18 @@
 if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['email'])) {
     require_once "general.php";
     require_once "connection.php";
+    require_once "variables.php";
     //Make query
     $stmt=mysqli_stmt_init($link);
-    if (mysqli_stmt_prepare($stmt,"INSERT INTO users (name, password, email, date_joined) VALUES (?,?,?,Now())")) {
+    if (mysqli_stmt_prepare($stmt,"INSERT INTO users (name, password, email, date_joined) VALUES (?,?,?,Now())")) 
+    {
         mysqli_stmt_bind_param($stmt, "sss", $username, $password_hash, $email);
         $password_hash = generateHash($_POST['password']);
         $username=$_POST['username'];
         $email=$_POST['email'];
         mysqli_stmt_execute($stmt);
-        if (mysqli_stmt_affected_rows($stmt) > 0) {
+        if (mysqli_stmt_affected_rows($stmt) > 0) 
+        {
             $to=$email;
             $subject="Email confirmation for Sharehere.net";
             $email_link_hash=substr(generateHash($email, EMAIL_SALT, 125), 125);
@@ -35,7 +38,8 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
             mail($to, $subject, $message, $headers);
             echo 0;
         }
-        else {
+        else 
+        {
             echo 1;
         }
     }
@@ -44,26 +48,35 @@ if (isset($_POST['password']) && isset($_POST['username']) && isset($_POST['emai
 } elseif (isset($_GET['email']) && isset($_GET['cc'])) {
     require_once "general.php";
     require_once "connection.php";
+    require_once "variables.php";
     $stmt=mysqli_stmt_init($link);
-    if (mysqli_stmt_prepare($stmt, "UPDATE users SET authenticated=0 WHERE email=?")) {
+    if (mysqli_stmt_prepare($stmt, "UPDATE users SET authenticated=1 WHERE email=?")) 
+    {
         mysqli_stmt_bind_param($stmt, "s", $email);
         //Set variables
         $email=$_GET['email'];
         $email_link_hash=$_GET['cc'];
         $email_hash=substr(generateHash($email, EMAIL_SALT, 125), 125);
-        if ( $email_hash == $email_link_hash ) {
+        if ( $email_hash == $email_link_hash ) 
+        {
             mysqli_stmt_execute($stmt);    
-            if (mysqli_stmt_affected_rows($stmt) > 0) {
+            if (mysqli_stmt_affected_rows($stmt) > 0) 
+            {
                 echo 0;
-                }
+                exit;    
             }
-        else {
+        }
+        else 
+        {
             echo 1;
-            }
+            exit;
+        }
     }
     mysqli_stmt_close($stmt);
     exit;
-} else {
+} 
+else 
+{
     echo 2;
     exit;
 } 

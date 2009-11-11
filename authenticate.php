@@ -30,6 +30,7 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
         //Check for invalid or unsuccessful query
         if (mysqli_stmt_num_rows($stmt)== 0) {
             echo 2;
+            exit;
         }
         /* bind result variables */
         mysqli_stmt_bind_result($stmt, $password);
@@ -50,6 +51,8 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
 
         /* close statement */
         mysqli_stmt_close($stmt);
+
+        exit;
     } 
 } else { 
     echo 3;
