@@ -12,8 +12,8 @@
 if (isset($_POST['password']) && isset($_POST['email'])) {
     require_once "general.php";
     require_once "connection.php";
-    $stmt = $mysqli_stmt_init($link)
-    if (mysqi_stmt_prepare($stmt, "SELECT password FROM users WHERE email=?")) {
+    $stmt = mysqli_stmt_init($link);
+    if (mysqli_stmt_prepare($stmt, "SELECT password FROM users WHERE email=?")) {
 
         /* bind parameters for markers */
         mysqli_stmt_bind_param($stmt,"s", $email);
@@ -32,7 +32,7 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
             echo 2;
         }
         /* bind result variables */
-        mysqli_stmt_bind_result($password);
+        mysqli_stmt_bind_result($stmt, $password);
 
         /* fetch value */
         mysqli_stmt_fetch($stmt);
