@@ -9,6 +9,6 @@ function generateHash($plainText, $salt = null, $salt_length=10)
     {
         $salt = substr($salt, 0, $salt_length);
     }
-    return $salt . hash("sha512", $salt . $plainText);
+    return array("salt" => $salt, "hash" => hash("sha512", $salt . $plainText));
 }
 ?>
