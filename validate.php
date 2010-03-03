@@ -1,20 +1,32 @@
 <?php
     /* Validates email or password
+        Required Fields
+            Email:
+                $_GET['email']
+            Password:
+                $_GET['password']
+        
         Returns:
             0       - Good password or email
             1       - Bad password or email
             2       - Argument not set
     */
 
-if (isset($_GET['email'])) {
+if (isset($_GET['email'])) 
+{
     /* Should we even validate emails? Sort of pointless, but here is an ok one */
     reg="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i";
-    if (preg_match($reg, $_GET['email'])) {
+    if (preg_match($reg, $_GET['email'])) 
+    {
         echo 0;
-    } else {
+    } 
+    else 
+    {
         echo 1;
     }
-} elseif (isset($_GET['password'])) {
+} 
+elseif (isset($_GET['password'])) 
+{
     /* Valid password - two checks
             -strlen(password) > 6 
             -password not in banned_passwords
@@ -29,7 +41,9 @@ if (isset($_GET['email'])) {
     {
         echo 1;
     }
-} else {
+} 
+else 
+{
     echo 2;
-    }
+}
 ?>

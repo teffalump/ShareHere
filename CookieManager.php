@@ -64,7 +64,7 @@ class CookieManager
         //Three checks to confirm validity
         //First: correct number of fields
         if (count($cookieFields) !== 4)
-        {   
+        {
             return False;
         }
         //Second: expires after current time
@@ -87,8 +87,9 @@ class CookieManager
         //Structure of the cookie: username|expiration time|data|HMAC(username|expiration time|data|session_key, k)
         //k=HMAC(username|expiration time, sk)
         //sk = server key
-        //If SSL isn't enabled, then bind the cookie to their IP address - a reasonable substitute, I think.
-        //Binding to IP address doesn't have the security the SSL certificate does, but oh well.
+        //If SSL isn't enabled, then bind the cookie to their IP address and User Agent - a reasonable substitute, I think.
+        //Binding to IP address and user agent doesn't have the security the SSL certificate does, but oh well.
+        
         $key=hash_hmac("sha512", $username.$expiration, $this->_secret);
         
         if ($this->_ssl && isset($_SERVER['SSL_SESSION_ID']))
@@ -96,8 +97,10 @@ class CookieManager
             $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['SSL_SESSION_ID'], $key);
         }
         else
-            $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['REMOTE_ADDR'], $key);
-        
+        {
+            $digest = hash_hmac("sha512", $username . $expiration . $data . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'], $key);
+        }
+
         $fields = array($username, $expiration, $data, $digest);
         return (base64_encode(implode('|', $fields)));
     }
