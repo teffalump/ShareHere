@@ -12,6 +12,7 @@
 if (isset($_POST['password']) && isset($_POST['email'])) {
     require_once "general.php";
     require_once "connection.php";
+    require_once "variables.php";
 
     $email=$_POST['email'];
     
@@ -32,18 +33,18 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
         $password = $obj["password"];
         }
 
-    $test_hash = generateHash($_POST['password']);
+    $test_hash = generateHash($_POST['password'], USER_SALT);
     if ($test_hash == $password) 
         {
         echo 0;
-        exit;
         }
     else 
         {
         echo 1;
-        exit;
         }
-} else { 
+    exit;
+} 
+else { 
     echo 3;
     exit;
 }

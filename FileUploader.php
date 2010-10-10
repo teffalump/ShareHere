@@ -102,7 +102,7 @@ class FileUploader
            Returns mime of file or false if failed
         */
 
-        if ($finfo = finfo_open(FILEINFO_MIME))
+        if ($finfo = finfo_open(FILEINFO_MIME_TYPE))
         {
             $mime = finfo_file($finfo, $_FILES[$file]['tmp_name']);
             finfo_close($finfo);
